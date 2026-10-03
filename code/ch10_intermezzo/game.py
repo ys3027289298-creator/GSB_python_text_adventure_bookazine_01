@@ -21,7 +21,7 @@ def play():
 
 
 def get_player_command():
-    return input('Action: ')
+    return input('Action: ').strip().lower()
 
 
 play()

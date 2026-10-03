@@ -1,4 +1,5 @@
 import items
+import world
 
 
 class Player:
@@ -32,8 +33,11 @@ class Player:
         return best_weapon
 
     def move(self, dx, dy):
-        self.x += dx
-        self.y += dy
+        if world.tile_at(self.x + dx, self.y + dy):
+            self.x += dx
+            self.y += dy
+        else:
+            print("You can't go that way!")
 
     def move_north(self):
         self.move(dx=0, dy=-1)

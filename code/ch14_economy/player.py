@@ -32,7 +32,10 @@ class Player:
         while not valid:
             choice = input("")
             try:
-                to_eat = consumables[int(choice) - 1]
+                index = int(choice)
+                if not 1 <= index <= len(consumables):
+                    raise IndexError
+                to_eat = consumables[index - 1]
                 self.hp = min(100, self.hp + to_eat.healing_value)
                 self.inventory.remove(to_eat)
                 print("Current HP: {}".format(self.hp))

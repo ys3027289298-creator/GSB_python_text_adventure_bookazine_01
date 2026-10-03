@@ -11,6 +11,8 @@ def play():
         room = world.tile_at(player.x, player.y)
         print(room.intro_text())
         room.modify_player(player)
+        if isinstance(room, world.VictoryTile):
+            break
         choose_action(room, player)
 
 
@@ -18,7 +20,7 @@ def choose_action(room, player):
     action = None
     while not action:
         available_actions = get_available_actions(room, player)
-        action_input = input("Action: ")
+        action_input = input("Action: ").strip()
         action = available_actions.get(action_input)
         if action:
             action()

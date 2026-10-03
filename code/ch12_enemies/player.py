@@ -31,7 +31,10 @@ class Player:
         while not valid:
             choice = input("")
             try:
-                to_eat = consumables[int(choice) - 1]
+                index = int(choice)
+                if not 1 <= index <= len(consumables):
+                    raise IndexError
+                to_eat = consumables[index - 1]
                 self.hp = min(100, self.hp + to_eat.healing_value)
                 self.inventory.remove(to_eat)
                 print("Current HP: {}".format(self.hp))
@@ -71,6 +74,9 @@ class Player:
     def attack(self):
         best_weapon = self.most_powerful_weapon()
         room = world.tile_at(self.x, self.y)
+        if not isinstance(room, world.EnemyTile) or not room.enemy.is_alive():
+            print("There is nothing to attack here!")
+            return
         enemy = room.enemy
         print("You use {} against {}!".format(best_weapon.name, enemy.name))
         enemy.hp -= best_weapon.damage
